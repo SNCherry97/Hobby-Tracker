@@ -12,6 +12,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
+    font-color: #000000;
 }
 
 /* Swipe container for centering and layout */
@@ -20,6 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #ffffff;
+    font-color: #000000;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
