@@ -1,69 +1,60 @@
-const activities = ['hiking', 'painting', 'cycling'];  // Example list of hobbies
-let currentIndex = 0;
+const hobbyCard = document.getElementById('hobby-card');
+const hobbyImage = document.getElementById('hobby-image');
+const hobbyName = document.getElementById('hobby-name');
+const leftSwipeBtn = document.getElementById('left-swipe');
+const rightSwipeBtn = document.getElementById('right-swipe');
 
-async function fetchImage(activity) {
-    const accessKey = 'const activities = ['hiking', 'painting', 'cycling'];  // Example list of hobbies
-let currentIndex = 0;
+// Array of hobbies
+const hobbies = ['Hiking', 'Painting', 'Gaming', 'Photography', 'Cooking'];
+let currentHobbyIndex = 0;
 
-async function fetchImage(activity) {
-    const accessKey = '0N9Z6gIxW4ps8bFMZn4dzaRugmP1McxGUIUXFynzD3A';
-    const response = await fetch(`https://api.unsplash.com/search/photos?query=${activity}&client_id=${accessKey}`);
-    const data = await response.json();
-    return data.results[0]?.urls?.small || 'default-image.jpg';
-}
+// Unsplash API configuration
+const unsplashAccessKey = '0N9Z6gIxW4ps8bFMZn4dzaRugmP1McxGUIUXFynzD3A';  // Replace with your actual Unsplash API key
 
-function displayNextActivity() {
-    if (currentIndex < activities.length) {
-        const activity = activities[currentIndex];
-        document.getElementById('activityName').innerText = activity;
-        fetchImage(activity).then(url => {
-            document.getElementById('activityImage').src = url;
+// Fetch an image for the hobby from Unsplash
+function fetchHobbyImage(hobby) {
+    const url = `https://api.unsplash.com/search/photos?query=${hobby}&client_id=${unsplashAccessKey}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.results.length > 0) {
+                const imageUrl = data.results[0].urls.regular;
+                hobbyImage.src = imageUrl;
+            } else {
+                hobbyImage.src = 'default-placeholder-image.jpg';  // Use a default image if none found
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching image:', err);
+            hobbyImage.src = 'default-placeholder-image.jpg';  // Use a default image on error
         });
-    } else {
-        alert('You’ve swiped through all activities!');
-    }
 }
 
-function swipeLeft() {
-    currentIndex++;
-    displayNextActivity();
+// Display the current hobby
+function displayHobby() {
+    const hobby = hobbies[currentHobbyIndex];
+    hobbyName.textContent = hobby;
+    fetchHobbyImage(hobby);
 }
 
-function swipeRight() {
-    currentIndex++;
-    // Store the liked activity if needed
-    displayNextActivity();
+// Handle swipe left (dislike)
+leftSwipeBtn.addEventListener('click', () => {
+    console.log(`Disliked: ${hobbies[currentHobbyIndex]}`);
+    nextHobby();
+});
+
+// Handle swipe right (like)
+rightSwipeBtn.addEventListener('click', () => {
+    console.log(`Liked: ${hobbies[currentHobbyIndex]}`);
+    nextHobby();
+});
+
+// Move to the next hobby
+function nextHobby() {
+    currentHobbyIndex = (currentHobbyIndex + 1) % hobbies.length;
+    displayHobby();
 }
 
-// Initialize with the first activity
-displayNextActivity();';
-    const response = await fetch(`https://api.unsplash.com/search/photos?query=${activity}&client_id=${accessKey}`);
-    const data = await response.json();
-    return data.results[0]?.urls?.small || 'default-image.jpg';
-}
-
-function displayNextActivity() {
-    if (currentIndex < activities.length) {
-        const activity = activities[currentIndex];
-        document.getElementById('activityName').innerText = activity;
-        fetchImage(activity).then(url => {
-            document.getElementById('activityImage').src = url;
-        });
-    } else {
-        alert('You’ve swiped through all activities!');
-    }
-}
-
-function swipeLeft() {
-    currentIndex++;
-    displayNextActivity();
-}
-
-function swipeRight() {
-    currentIndex++;
-    // Store the liked activity if needed
-    displayNextActivity();
-}
-
-// Initialize with the first activity
-displayNextActivity();
+// Initialize the first hobby on page load
+document.addEventListener('DOMContentLoaded', displayHobby);
