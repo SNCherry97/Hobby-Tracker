@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hobby Tracker</title>
   <link rel="stylesheet" href="assets/css/style.css">
@@ -13,6 +13,14 @@
   <main>
     <p>This is a basic homepage for the Hobby Tracker project. More features and content to come soon!</p>
     <p>Check out the project on <a href="https://github.com/SNCherry97/Hobby-Tracker">GitHub</a>.</p>
+    <br>
+    <div id="swipeContainer">
+        <img id="activityImage" src="default.jpg" alt="Activity Image">
+        <h2 id="activityName">Hiking</h2>
+        <button onclick="swipeLeft()">Left</button>
+        <button onclick="swipeRight()">Right</button>
+    </div>
+    <script src="app.js"></script>
   </main>
   <footer>
     <p>&copy; 2024 Hobby Tracker</p>
